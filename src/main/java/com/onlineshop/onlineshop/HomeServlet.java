@@ -4,33 +4,35 @@ import java.io.*;
 
 import entity.User;
 import jakarta.persistence.EntityManager;
+import jakarta.servlet.ServletException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import jakarta.servlet.RequestDispatcher;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
-    private String message;
+@WebServlet(name = "home", value = "/")
+public class HomeServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    public void init() {
-        message = "Hello World!";
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+        RequestDispatcher dispatcher //
+                = this.getServletContext().getRequestDispatcher("/home.jsp");
+        dispatcher.forward(request, response);
+        /*response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + "message" + "</h1>");
-        /*List<Item> items = getItems();
-        out.println(items.size());
-        for (Item item : items) {
-            out.println("Товар №" + item.getId() + ": " + item.getName());
-        }*/
         testPersistence();
         out.println("<h1>" + "message2" + "</h1>");
-        out.println("</body></html>");
+        out.println("</body></html>");*/
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        doGet(request, response);
     }
 
     private void testPersistence() {

@@ -1,9 +1,6 @@
 package com.onlineshop.onlineshop;
 
-import java.io.IOException;
-import java.io.*;
-
-import java.util.List;
+import com.onlineshop.onlineshop.utils.AppUtils;
 import entity.User;
 import jakarta.persistence.*;
 import jakarta.servlet.RequestDispatcher;
@@ -12,13 +9,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    public LoginServlet() {
-        super();
-    }
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
+@WebServlet(name = "login", value = "/login")
+public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,28 +42,16 @@ public class LoginServlet extends HttpServlet {
             dispatcher.forward(request, response);
             return;
         }
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + user.getFullName() + " вошёл успешно</h1>");
-        out.println("</body></html>");
-        /*
-        AppUtils.storeLoginedUser(request.getSession(), userAccount);
 
-        //
+        AppUtils.storeLoggedInUser(request.getSession(), user);
         int redirectId = -1;
         try {
             redirectId = Integer.parseInt(request.getParameter("redirectId"));
         } catch (Exception e) {
         }
         String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
-        if (requestUri != null) {
-            response.sendRedirect(requestUri);
-        } else {
-            // Default after successful login
-            // redirect to /userInfo page
-            response.sendRedirect(request.getContextPath() + "/userInfo");
-        }*/
-
+        // By default after successful login redirect to /userInfo page
+        response.sendRedirect(Objects.requireNonNullElseGet(requestUri, () -> request.getContextPath() + "/userInfo"));
     }
 
     protected User findUser(String username, String password) {

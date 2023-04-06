@@ -4,7 +4,7 @@
       <li><a href="${pageContext.request.contextPath}/userInfo">User Info</a></li>
       <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
       <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-      <span style="color:red">[ ${loginedUser.userName} ]</span>
+      <span style="color:red">[ ${loggedInUser.username} ]</span>
     </ul>
   </div>
 </nav>

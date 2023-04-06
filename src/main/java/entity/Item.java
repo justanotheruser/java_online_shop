@@ -1,10 +1,6 @@
 package entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Arrays;
 
@@ -35,7 +31,7 @@ public class Item {
     private String description;
     @Basic
     @Column(name = "price")
-    private Object price;
+    private double price;
     @Basic
     @Column(name = "quantity")
     private Integer quantity;
@@ -102,11 +98,11 @@ public class Item {
         this.description = description;
     }
 
-    public Object getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Object price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -143,12 +139,12 @@ public class Item {
 
         if (id != that.id) return false;
         if (partNumber != that.partNumber) return false;
+        if (price != that.price) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (category != null ? !category.equals(that.category) : that.category != null) return false;
         if (brand != null ? !brand.equals(that.brand) : that.brand != null) return false;
         if (manufacturer != null ? !manufacturer.equals(that.manufacturer) : that.manufacturer != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (!Arrays.equals(image, that.image)) return false;
         if (averageRating != null ? !averageRating.equals(that.averageRating) : that.averageRating != null)
@@ -166,7 +162,7 @@ public class Item {
         result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
         result = 31 * result + partNumber;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (int)price;
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(image);
         result = 31 * result + (averageRating != null ? averageRating.hashCode() : 0);

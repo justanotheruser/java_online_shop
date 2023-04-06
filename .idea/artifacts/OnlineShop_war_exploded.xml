@@ -1,6 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" build-on-make="true" name="OnlineShop:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/OnlineShop_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/OnlineShop-1.0-SNAPSHOT</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>OnlineShop</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -26,6 +33,9 @@
           <element id="library" level="project" name="Maven: org.glassfish.jaxb:txw2:3.0.2" />
           <element id="library" level="project" name="Maven: com.sun.istack:istack-commons-runtime:4.0.1" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/OnlineShop-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="OnlineShop/web/Web" />
     </root>

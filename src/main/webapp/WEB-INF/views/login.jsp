@@ -4,19 +4,19 @@
 <body>
 <jsp:include page="includes/menu.jsp"/>
 
-<h3>Login Page</h3>
+<h3>Войти</h3>
 
-<p style="color: red;">${pageContext.request.getParameter("errorMessage")}</p>
+<p style="color: red;">${pageContext.request.getAttribute("errorMessage")}</p>
 
 <form method="POST" action="${pageContext.request.contextPath}/login">
   <input type="hidden" name="redirectId" value="${param.redirectId}" />
   <table>
     <tr>
-      <td>User Name</td>
+      <td>Имя пользователя</td>
       <td><input type="text" name="userName" value= "${user.userName}" /> </td>
     </tr>
     <tr>
-      <td>Password</td>
+      <td>Пароль</td>
       <td><input type="password" name="password" value= "${user.password}" /> </td>
     </tr>
 

@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = findUser(userName, password);
         if (user == null) {
-            String errorMessage = "Invalid userName or Password";
+            String errorMessage = "Неправильный логин или пароль";
             request.setAttribute("errorMessage", errorMessage);
 
             RequestDispatcher dispatcher //

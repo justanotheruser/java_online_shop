@@ -1,9 +1,11 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
 <jsp:include page="includes/header.jsp"/>
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
 <div id="content" class="container">
-    <h1>Main page</h1>
+    <h1>Главная страница</h1>
 </div>
 </body>
 

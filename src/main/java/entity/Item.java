@@ -8,6 +8,7 @@ import java.util.Arrays;
 @Table(name = "items", schema = "public", catalog = "online_shop")
 public class Item {
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
     private int id;

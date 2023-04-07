@@ -41,10 +41,6 @@
         <element id="file-copy" path="$PROJECT_DIR$/target/OnlineShop-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="OnlineShop/web/Web" />
-      <element id="library" level="project" name="Maven: org.glassfish.jaxb:jaxb-core:3.0.2" />
-      <element id="library" level="project" name="Maven: org.glassfish.jaxb:jaxb-runtime:3.0.2" />
-      <element id="library" level="project" name="Maven: org.glassfish.jaxb:txw2:3.0.2" />
-      <element id="library" level="project" name="Maven: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1" />
     </root>
   </artifact>
 </component>

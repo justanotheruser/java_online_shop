@@ -2,7 +2,7 @@ package com.onlineshop.onlineshop;
 
 import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
-import entity.Item;
+import com.onlineshop.onlineshop.utils.AppUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,14 +18,7 @@ public class ItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int itemId = -1;
-        try {
-            itemId = Integer.parseInt(request.getParameter("id"));
-        } catch (Exception e) {
-            response.sendRedirect(request.getContextPath());
-        }
-        Item item = itemDao.findById(itemId);
-        request.setAttribute("item", item);
+        AppUtils.addItemToRequestAttrs(request, response, itemDao);
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/item.jsp");
         dispatcher.forward(request, response);

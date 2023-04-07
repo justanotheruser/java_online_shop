@@ -23,7 +23,7 @@
     </label><br>
     <label>
         Код товара
-        <input name="partNumber" type="number/">
+        <input name="partNumber" type="number"/>
     </label><br>
     <label>
         Описание
@@ -35,7 +35,7 @@
     </label><br>
     <label>
         Количество
-        <input name="quantity" type="number/">
+        <input name="quantity" type="number"/>
     </label><br>
     <input type="submit" value="Создать"/>
 </form>

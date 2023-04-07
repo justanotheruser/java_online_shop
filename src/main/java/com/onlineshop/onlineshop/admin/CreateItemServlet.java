@@ -25,9 +25,8 @@ public class CreateItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // TODO: add validation
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO add validation
         Item item = new Item();
         item.setName(request.getParameter("name"));
         item.setCategory(request.getParameter("category"));
@@ -38,9 +37,6 @@ public class CreateItemServlet extends HttpServlet {
         item.setPrice(Double.parseDouble(request.getParameter("price")));
         item.setQuantity(Integer.parseInt(request.getParameter("quantity")));
         itemDao.save(item);
-
-        RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/admin/listItems.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/admin/listItems");
     }
 }

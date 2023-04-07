@@ -64,6 +64,27 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
     }
 
     @Override
+    public T update(T entity) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+
+            if (getterId(entity) == null) {
+                entityManager.merge(entity);
+            } else {
+                entityManager.merge(entity);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        }
+
+        entityManager.close();
+
+        return entity;
+    }
+
+    @Override
     public void delete(T entity) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {

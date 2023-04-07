@@ -1,8 +1,13 @@
 package com.onlineshop.onlineshop.utils;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.onlineshop.onlineshop.dao.ItemDao;
+import entity.Item;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import entity.User;
@@ -44,5 +49,17 @@ public class AppUtils {
             return url;
         }
         return null;
+    }
+
+    public static int addItemToRequestAttrs(HttpServletRequest request, HttpServletResponse response, ItemDao itemDao) throws IOException {
+        int itemId = -1;
+        try {
+            itemId = Integer.parseInt(request.getParameter("id"));
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath());
+        }
+        Item item = itemDao.findById(itemId);
+        request.setAttribute("item", item);
+        return itemId;
     }
 }

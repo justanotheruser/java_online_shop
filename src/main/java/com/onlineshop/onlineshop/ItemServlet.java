@@ -3,6 +3,7 @@ package com.onlineshop.onlineshop;
 import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
 import entity.Item;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,6 +25,9 @@ public class ItemServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath());
         }
         Item item = itemDao.findById(itemId);
-        System.out.println(item.toString());
+        request.setAttribute("item", item);
+        RequestDispatcher dispatcher //
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/item.jsp");
+        dispatcher.forward(request, response);
     }
 }

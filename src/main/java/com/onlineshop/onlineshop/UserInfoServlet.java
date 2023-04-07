@@ -1,16 +1,13 @@
 package com.onlineshop.onlineshop;
 
-import java.io.*;
-
-import entity.User;
-import jakarta.persistence.EntityManager;
-import jakarta.servlet.ServletException;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 @WebServlet(name = "userInfo", value = "/userInfo")
 public class UserInfoServlet extends HttpServlet {

@@ -1,7 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="includes/item_page_header.jsp"/>
+<jsp:include page="includes/header.jsp"/>
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
@@ -29,6 +29,5 @@
         </div>
     </div>
 </section>
-</body>
 
 <jsp:include page="includes/footer.jsp"/>

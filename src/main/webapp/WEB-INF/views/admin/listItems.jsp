@@ -15,7 +15,7 @@
                 <c:forEach var="item" items="${itemRow}">
                 <div class="u-align-center u-container-style u-list-item u-repeater-item">
                     <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
-                        <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-3" src="images/g.jpg">
+                        <img alt="" class="u-border-7 u-border-grey-5 u-expanded-width u-image u-image-default u-image-3" src="data:image/jpg;base64,${item.base64Image}">
                         <h4 class="u-custom-font u-font-raleway u-text u-text-default u-text-5">${item.name}</h4>
                         <h3 class="u-text u-text-6">${item.price}₽</h3><br>
                         <h3 class="u-text u-text-6">Количество ${item.quantity}</h3>

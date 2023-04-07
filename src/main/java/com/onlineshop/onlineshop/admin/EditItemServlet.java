@@ -13,8 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 @WebServlet(name = "adminEditItem", value = "/admin/editItem")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,    // 10 MB
@@ -57,7 +59,9 @@ public class EditItemServlet extends HttpServlet {
                 inputStream = imageFilePart.getInputStream();
                 byte[] imageByteArray = new byte[inputStream.available()];
                 inputStream.read(imageByteArray);
-                item.setImage(imageByteArray);
+                inputStream.close();
+                String base64Image = Base64.getEncoder().encodeToString(imageByteArray);
+                item.setBase64Image(base64Image);
                 itemDao.update(item);
             }
         }

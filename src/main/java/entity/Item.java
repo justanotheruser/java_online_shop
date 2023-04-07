@@ -37,8 +37,8 @@ public class Item {
     @Column(name = "quantity")
     private Integer quantity;
     @Basic
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "base64_image")
+    private String base64Image;
     @Basic
     @Column(name = "average_rating")
     private Float averageRating;
@@ -115,12 +115,12 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getBase64Image() {
+        return base64Image;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 
     public Float getAverageRating() {
@@ -147,7 +147,7 @@ public class Item {
         if (manufacturer != null ? !manufacturer.equals(that.manufacturer) : that.manufacturer != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
-        if (!Arrays.equals(image, that.image)) return false;
+        if (base64Image != null ? !base64Image.equals(that.base64Image) : that.base64Image != null) return false;
         if (averageRating != null ? !averageRating.equals(that.averageRating) : that.averageRating != null)
             return false;
 
@@ -165,7 +165,7 @@ public class Item {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (int)price;
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(image);
+        result = 31 * result + base64Image.hashCode();
         result = 31 * result + (averageRating != null ? averageRating.hashCode() : 0);
         return result;
     }

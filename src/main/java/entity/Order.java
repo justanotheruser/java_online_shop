@@ -3,6 +3,7 @@ package entity;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders", schema = "public", catalog = "online_shop")
@@ -12,7 +13,7 @@ public class Order {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "user_id ")
+    @Column(name = "user_id")
     private int userId;
     @Basic
     @Column(name = "date_created")
@@ -29,6 +30,9 @@ public class Order {
     @Basic
     @Column(name = "status")
     private String status;
+
+    @OneToMany(mappedBy="cart")
+    private Set<OrderItem> orderItems;
 
     public int getId() {
         return id;

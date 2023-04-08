@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_items", schema = "public", catalog = "online_shop")
-public class OrderItems {
+public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -18,6 +18,14 @@ public class OrderItems {
     @Basic
     @Column(name = "quantity")
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name="order_id", nullable=false)
+    private Order order;
+
+    public OrderItem(Order order) {
+        this.order = order;
+    }
 
     public int getId() {
         return id;
@@ -56,7 +64,7 @@ public class OrderItems {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderItems that = (OrderItems) o;
+        OrderItem that = (OrderItem) o;
 
         if (id != that.id) return false;
         if (orderId != that.orderId) return false;

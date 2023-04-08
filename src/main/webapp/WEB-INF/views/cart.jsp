@@ -39,8 +39,18 @@
     </tr>
 </table>
 <br>
-<a href="${root}">Продолжить покупки</a>
+<a href="${root}">Продолжить покупки</a><br>
+
+<h3>Оформить заказ</h3>
 <form method="post">
+    <label>
+        Способ доставки
+        <input type="text" name="method">
+    </label><br>
+    <label>
+        Дополнительная информация
+        <input type="text" name="additionalNotes">
+    </label><br>
     <input type="submit" value="Оформить заказ">
 </form>
 

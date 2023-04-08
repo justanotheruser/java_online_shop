@@ -4,18 +4,14 @@ import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
 import com.onlineshop.onlineshop.dao.OrderDao;
 import com.onlineshop.onlineshop.dao.OrderDaoImpl;
+import com.onlineshop.onlineshop.services.OrderService;
+import com.onlineshop.onlineshop.services.OrderServiceImpl;
 import com.onlineshop.onlineshop.utils.AppUtils;
+import entity.CartItem;
 import entity.Order;
+import entity.OrderItem;
 import entity.User;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.annotation.WebServlet;
-import entity.CartItem;
-
-import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,10 +19,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
-    private ItemDao itemDao = ItemDaoImpl.getInstance();
-    private OrderDao orderDao = OrderDaoImpl.getInstance();
+    private final ItemDao itemDao = ItemDaoImpl.getInstance();
+    private final OrderService orderService = OrderServiceImpl.getInstance();
+    private static double getTotalPrice(HttpSession session) {
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        double result = 0;
+        for (CartItem item : cart) {
+            result += item.getProduct().getPrice() * item.getQuantity();
+        }
+        return result;
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -108,16 +118,18 @@ public class CartServlet extends HttpServlet {
         order.setDateCreated(new Date(System.currentTimeMillis()));
         order.setTotalPrice(CartServlet.getTotalPrice(session));
         order.setStatus("OPEN");
-        order.setDeliveryMethod("Самовывоз");
-        order.setAdditionalNotes("");
-        orderDao.save(order);
-    }
-    private static double getTotalPrice(HttpSess    ion session) {
+        order.setDeliveryMethod(request.getParameter("method"));
+        order.setAdditionalNotes(request.getParameter("additionalNotes"));
+
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        double result = 0;
-        for (CartItem item : cart) {
-            result += item.getProduct().getPrice() * item.getQuantity();
+        ArrayList<OrderItem> orderItems = new ArrayList<>();
+        for (CartItem cartItem : cart) {
+            OrderItem orderItem = new OrderItem(order);
+            orderItem.setItemId(cartItem.getProduct().getId());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItems.add(orderItem);
         }
-        return result;
+        orderService.saveOrder(order, orderItems);
+        response.sendRedirect(request.getContextPath());
     }
 }

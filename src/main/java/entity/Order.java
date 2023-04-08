@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders", schema = "public", catalog = "online_shop")
+@NamedQuery(name ="Orders.byUser", query = "SELECT o FROM Order o WHERE o.userId = :userId")
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

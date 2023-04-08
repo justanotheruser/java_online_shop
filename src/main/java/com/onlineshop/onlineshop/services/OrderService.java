@@ -10,4 +10,6 @@ public interface OrderService {
     void saveOrder(Order order, List<OrderItem> orderItems);
 
     Collection<Order> getAll();
+
+    Collection<Order> getCustomerOrders(int userId);
 }

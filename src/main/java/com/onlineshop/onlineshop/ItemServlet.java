@@ -14,10 +14,10 @@ import java.io.IOException;
 
 @WebServlet(name = "item", value = "/item")
 public class ItemServlet extends HttpServlet {
-    private ItemDao itemDao = ItemDaoImpl.getInstance();
+    private final ItemDao itemDao = ItemDaoImpl.getInstance();
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AppUtils.addItemToRequestAttrs(request, response, itemDao);
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/item.jsp");

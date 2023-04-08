@@ -32,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
         orderDao.save(order);
     }
 
+    // TODO: remove
     @Override
     public Collection<Order> getAll() {
         return orderDao.findAll();

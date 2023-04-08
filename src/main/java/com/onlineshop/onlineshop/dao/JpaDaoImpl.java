@@ -4,6 +4,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,6 +14,7 @@ import java.lang.reflect.Field;
 
 public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
     protected static EntityManagerFactory entityManagerFactory;
+    private static final Logger logger = LogManager.getLogger(ItemDaoImpl.class);
 
     static {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");
@@ -55,6 +59,7 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             entityManager.getTransaction().rollback();
         }
 
@@ -76,6 +81,7 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             entityManager.getTransaction().rollback();
         }
 
@@ -93,6 +99,7 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
             entityManager.remove(entity);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             entityManager.getTransaction().rollback();
         }
 
@@ -112,6 +119,7 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
 
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             entityManager.getTransaction().rollback();
         }
         entityManager.close();
@@ -130,6 +138,7 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
 
             return (ID) id.get(entity);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

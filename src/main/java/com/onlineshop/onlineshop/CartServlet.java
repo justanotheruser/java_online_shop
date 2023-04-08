@@ -124,7 +124,7 @@ public class CartServlet extends HttpServlet {
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         ArrayList<OrderItem> orderItems = new ArrayList<>();
         for (CartItem cartItem : cart) {
-            OrderItem orderItem = new OrderItem(order);
+            OrderItem orderItem = new OrderItem();
             orderItem.setItemId(cartItem.getProduct().getId());
             orderItem.setQuantity(cartItem.getQuantity());
             orderItems.add(orderItem);

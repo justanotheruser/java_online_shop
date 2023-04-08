@@ -11,21 +11,13 @@ public class OrderItem {
     private int id;
     @Basic
     @Column(name = "order_id")
-    private int orderId;
+    private Integer orderId;
     @Basic
     @Column(name = "item_id")
     private Integer itemId;
     @Basic
     @Column(name = "quantity")
     private int quantity;
-
-    @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
-    private Order order;
-
-    public OrderItem(Order order) {
-        this.order = order;
-    }
 
     public int getId() {
         return id;
@@ -35,11 +27,11 @@ public class OrderItem {
         this.id = id;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
@@ -67,8 +59,8 @@ public class OrderItem {
         OrderItem that = (OrderItem) o;
 
         if (id != that.id) return false;
-        if (orderId != that.orderId) return false;
         if (quantity != that.quantity) return false;
+        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
         if (itemId != null ? !itemId.equals(that.itemId) : that.itemId != null) return false;
 
         return true;
@@ -77,7 +69,7 @@ public class OrderItem {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + orderId;
+        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
         result = 31 * result + (itemId != null ? itemId.hashCode() : 0);
         result = 31 * result + quantity;
         return result;

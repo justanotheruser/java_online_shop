@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,9 +33,13 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy="cart")
-    private Set<OrderItem> orderItems;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
     public int getId() {
         return id;
     }

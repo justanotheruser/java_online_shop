@@ -6,15 +6,15 @@ import com.onlineshop.onlineshop.dao.OrderItemDao;
 import com.onlineshop.onlineshop.dao.OrderItemDaoImpl;
 import entity.Order;
 import entity.OrderItem;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
+    private static OrderServiceImpl orderService;
     private final OrderDao orderDao = OrderDaoImpl.getInstance();
     private final OrderItemDao orderItemDao = OrderItemDaoImpl.getInstance();
-    private static OrderServiceImpl orderService;
 
     public static OrderService getInstance() {
         if (orderService == null) {
@@ -26,9 +26,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void saveOrder(Order order, List<OrderItem> orderItems) {
-        orderDao.save(order);
         for (OrderItem orderItem : orderItems) {
-            orderItemDao.save(orderItem);
+            order.getOrderItems().add(orderItem);
         }
+        orderDao.save(order);
+    }
+
+    @Override
+    public Collection<Order> getAll() {
+        return orderDao.findAll();
     }
 }

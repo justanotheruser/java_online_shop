@@ -2,8 +2,6 @@ package com.onlineshop.onlineshop;
 
 import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
-import com.onlineshop.onlineshop.dao.OrderDao;
-import com.onlineshop.onlineshop.dao.OrderDaoImpl;
 import com.onlineshop.onlineshop.services.OrderService;
 import com.onlineshop.onlineshop.services.OrderServiceImpl;
 import com.onlineshop.onlineshop.utils.AppUtils;
@@ -28,6 +26,7 @@ import java.util.List;
 public class CartServlet extends HttpServlet {
     private final ItemDao itemDao = ItemDaoImpl.getInstance();
     private final OrderService orderService = OrderServiceImpl.getInstance();
+
     private static double getTotalPrice(HttpSession session) {
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         double result = 0;
@@ -130,6 +129,8 @@ public class CartServlet extends HttpServlet {
             orderItems.add(orderItem);
         }
         orderService.saveOrder(order, orderItems);
+
+        session.removeAttribute("cart");
         response.sendRedirect(request.getContextPath());
     }
 }

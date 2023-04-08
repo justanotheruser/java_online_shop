@@ -15,12 +15,14 @@ public class SecurityConfig {
     private static void init() {
         List<String> customerUrlPatterns = new ArrayList<>();
         customerUrlPatterns.add("/userInfo");
-        customerUrlPatterns.add("/employeeTask");
+        customerUrlPatterns.add("/cart");
+        customerUrlPatterns.add("/history");
         mapConfig.put(ROLE_CUSTOMER, customerUrlPatterns);
 
         List<String> adminUrlPatterns = new ArrayList<>();
         adminUrlPatterns.add("/userInfo");
-        adminUrlPatterns.add("/managerTask");
+        adminUrlPatterns.add("/admin/listItems");
+        adminUrlPatterns.add("/admin/listOrders");
         mapConfig.put(ROLE_ADMIN, adminUrlPatterns);
     }
 

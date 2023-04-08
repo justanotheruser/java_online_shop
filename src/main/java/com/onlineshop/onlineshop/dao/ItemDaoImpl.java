@@ -3,6 +3,7 @@ package com.onlineshop.onlineshop.dao;
 import entity.Item;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -29,6 +30,19 @@ public class ItemDaoImpl extends JpaDaoImpl<Item, Integer> implements ItemDao {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
             Query query = entityManager.createNativeQuery("SELECT DISTINCT category FROM items");
             return (Collection<String>) query.getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Collection<Item> findByCategory(String category) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            TypedQuery<Item> query = entityManager.createNamedQuery("Items.byCategory", Item.class);
+            query.setParameter(1, category);
+            return query.getResultList();
         } catch (HibernateException ex) {
             logger.error(ex.getMessage());
             return null;

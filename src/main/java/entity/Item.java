@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 @Entity
 @Table(name = "items", schema = "public", catalog = "online_shop")
+@NamedQuery(name = "Items.byCategory", query = "SELECT i FROM Item i WHERE i.category = ?1")
 public class Item {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

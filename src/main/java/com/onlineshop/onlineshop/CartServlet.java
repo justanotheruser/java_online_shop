@@ -2,11 +2,17 @@ package com.onlineshop.onlineshop;
 
 import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
+import com.onlineshop.onlineshop.dao.OrderDao;
+import com.onlineshop.onlineshop.dao.OrderDaoImpl;
+import com.onlineshop.onlineshop.utils.AppUtils;
+import entity.Order;
+import entity.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.annotation.WebServlet;
 import entity.CartItem;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +26,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
     private ItemDao itemDao = ItemDaoImpl.getInstance();
+    private OrderDao orderDao = OrderDaoImpl.getInstance();
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -86,5 +93,31 @@ public class CartServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User loggedInUser = AppUtils.getLoggedInUser(session);
+        if (loggedInUser == null) {
+            response.sendRedirect(request.getContextPath());
+            return;
+        }
+        if (session.getAttribute("cart") == null) {
+            response.sendRedirect(request.getContextPath());
+            return;
+        }
+        Order order = new Order();
+        order.setUserId(loggedInUser.getId());
+        order.setDateCreated(new Date(System.currentTimeMillis()));
+        order.setTotalPrice(CartServlet.getTotalPrice(session));
+        order.setStatus("OPEN");
+        order.setDeliveryMethod("Самовывоз");
+        order.setAdditionalNotes("");
+        orderDao.save(order);
+    }
+    private static double getTotalPrice(HttpSess    ion session) {
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        double result = 0;
+        for (CartItem item : cart) {
+            result += item.getProduct().getPrice() * item.getQuantity();
+        }
+        return result;
     }
 }

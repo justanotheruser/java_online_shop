@@ -9,12 +9,12 @@
 
 <table>
     <tr>
+        <th></th>
         <th>Товар</th>
         <th>Фото</th>
         <th>Цена</th>
         <th>Количество</th>
         <th>Итого</th>
-        <th></th>
     </tr>
     <c:set var="total" value="0"></c:set>
     <c:forEach var="item" items="${sessionScope.cart}">
@@ -26,7 +26,7 @@
             </td>
             <td>${item.product.name }</td>
             <td>
-                <img src=src="data:image/jpg;base64,${item.product.base64Image}" alt="" width="120">
+                <img src="data:image/jpg;base64,${item.product.base64Image}" alt="" width="120">
             </td>
             <td>${item.product.price }</td>
             <td>${item.quantity }</td>
@@ -39,6 +39,10 @@
     </tr>
 </table>
 <br>
-<a href="${root}>Продолжить покупк</a>
+<a href="${root}">Продолжить покупки</a>
+<form method="post">
+    <input type="submit" value="Оформить заказ">
+</form>
+
 </body>
 </html>

@@ -8,11 +8,13 @@
 <jsp:include page="includes/menu.jsp"/>
 <h1>Список заказов</h1>
 <table>
+    <th>#</th>
     <th>Сумма</th>
     <th>Способ доставки</th>
     <th>Статус</th>
     <c:forEach var="order" items="${orders}">
         <tr>
+            <td><a href="${root}/history/order?id=${order.id}">${order.id}</a></td>
             <td>${order.totalPrice}</td>
             <td>${order.deliveryMethod}</td>
             <td>${order.status}</td>

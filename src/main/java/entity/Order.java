@@ -1,15 +1,17 @@
 package entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders", schema = "public", catalog = "online_shop")
-@NamedQuery(name ="Orders.byUser", query = "SELECT o FROM Order o WHERE o.userId = :userId")
+@NamedQuery(name = "Orders.byUser", query = "SELECT o FROM Order o WHERE o.userId = :userId")
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,13 +36,15 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
+    @Fetch(FetchMode.SELECT)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
+
     public int getId() {
         return id;
     }
@@ -107,14 +111,12 @@ public class Order {
         if (id != order.id) return false;
         if (userId != order.userId) return false;
         if (Double.compare(order.totalPrice, totalPrice) != 0) return false;
-        if (dateCreated != null ? !dateCreated.equals(order.dateCreated) : order.dateCreated != null) return false;
-        if (deliveryMethod != null ? !deliveryMethod.equals(order.deliveryMethod) : order.deliveryMethod != null)
+        if (!Objects.equals(dateCreated, order.dateCreated)) return false;
+        if (!Objects.equals(deliveryMethod, order.deliveryMethod))
             return false;
-        if (additionalNotes != null ? !additionalNotes.equals(order.additionalNotes) : order.additionalNotes != null)
+        if (!Objects.equals(additionalNotes, order.additionalNotes))
             return false;
-        if (status != null ? !status.equals(order.status) : order.status != null) return false;
-
-        return true;
+        return Objects.equals(status, order.status);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class SecurityConfig {
         customerUrlPatterns.add("/userInfo");
         customerUrlPatterns.add("/cart");
         customerUrlPatterns.add("/history");
+        customerUrlPatterns.add("/history/order");
         mapConfig.put(ROLE_CUSTOMER, customerUrlPatterns);
 
         List<String> adminUrlPatterns = new ArrayList<>();

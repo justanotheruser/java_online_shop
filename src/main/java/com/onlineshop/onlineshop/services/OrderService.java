@@ -12,4 +12,6 @@ public interface OrderService {
     Collection<Order> getAll();
 
     Collection<Order> getCustomerOrders(int userId);
+
+    Collection<OrderItem> getFullOrderInfo(int orderId);
 }

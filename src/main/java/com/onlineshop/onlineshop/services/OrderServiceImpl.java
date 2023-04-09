@@ -41,4 +41,13 @@ public class OrderServiceImpl implements OrderService {
     public Collection<Order> getCustomerOrders(int userId) {
         return orderDao.getUsersOrders(userId);
     }
+
+    @Override
+    public Collection<OrderItem> getFullOrderInfo(int orderId) {
+        Order order = orderDao.findById(orderId);
+        if (order == null) {
+            return null;
+        }
+        return order.getOrderItems();
+    }
 }

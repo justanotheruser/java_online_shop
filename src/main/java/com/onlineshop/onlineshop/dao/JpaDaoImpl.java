@@ -17,7 +17,15 @@ public abstract class JpaDaoImpl<T, ID> implements JpaDao<T, ID> {
     private static final Logger logger = LogManager.getLogger(ItemDaoImpl.class);
 
     static {
-        entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        try {
+            entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        }
+        catch (Throwable e) {
+            while (e.getCause() != null) {
+                logger.error(e.getCause());
+                e = e.getCause();
+            }
+        }
     }
 
     private final String FIND_ALL;

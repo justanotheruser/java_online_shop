@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "order_items", schema = "public", catalog = "online_shop")
 public class OrderItem {
@@ -10,14 +12,23 @@ public class OrderItem {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "order_id")
+    @Column(name = "order_id", insertable = false, updatable = false)
     private Integer orderId;
     @Basic
-    @Column(name = "item_id")
+    @Column(name = "item_id", insertable = false, updatable = false)
     private Integer itemId;
     @Basic
     @Column(name = "quantity")
     private int quantity;
+
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     public int getId() {
         return id;
@@ -51,6 +62,22 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,10 +87,8 @@ public class OrderItem {
 
         if (id != that.id) return false;
         if (quantity != that.quantity) return false;
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        if (itemId != null ? !itemId.equals(that.itemId) : that.itemId != null) return false;
-
-        return true;
+        if (!Objects.equals(orderId, that.orderId)) return false;
+        return Objects.equals(itemId, that.itemId);
     }
 
     @Override

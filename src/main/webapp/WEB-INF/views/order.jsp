@@ -16,8 +16,8 @@
   </tr>
   <c:forEach var="orderItem" items="${orderItems}">
   <tr>
-    <td>${orderItem.item.name}</td>
-    <td><img class="card-img-top mb-5 mb-md-0" src="data:image/jpg;base64,${orderItem.item.base64Image}" alt="..." /></td>
+    <td> <a href="<c:out value="${root}/item?id=${orderItem.item.id}"/>">${orderItem.item.name}</a></td>
+    <td><img class="card-img-top mb-5 mb-md-0" width="120" height="100" src="data:image/jpg;base64,${orderItem.item.base64Image}" alt="..." /></td>
     <td>${orderItem.item.price}</td>
     <td>${orderItem.quantity}</td>
   </tr>

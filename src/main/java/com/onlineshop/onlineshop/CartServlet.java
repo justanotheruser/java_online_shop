@@ -124,7 +124,7 @@ public class CartServlet extends HttpServlet {
         ArrayList<OrderItem> orderItems = new ArrayList<>();
         for (CartItem cartItem : cart) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setItemId(cartItem.getProduct().getId());
+            orderItem.setItem(itemDao.findById(cartItem.getProduct().getId()));
             orderItem.setQuantity(cartItem.getQuantity());
             orderItems.add(orderItem);
         }

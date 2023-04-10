@@ -32,7 +32,7 @@ public class CreateItemServlet extends HttpServlet {
         item.setCategory(request.getParameter("category"));
         item.setBrand(request.getParameter("brand"));
         item.setManufacturer(request.getParameter("manufacturer"));
-        item.setPartNumber(Integer.parseInt(request.getParameter("partNumber")));
+        item.setPartNumber(request.getParameter("partNumber"));
         item.setDescription(request.getParameter("description"));
         item.setPrice(Double.parseDouble(request.getParameter("price")));
         item.setQuantity(Integer.parseInt(request.getParameter("quantity")));

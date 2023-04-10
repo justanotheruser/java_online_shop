@@ -23,7 +23,7 @@ class ItemDaoImplTest {
     public void createItemAndFindById() {
         Item item = new Item();
         item.setName("ковырялка для носа");
-        item.setPartNumber(1);
+        item.setPartNumber("1a");
         itemDao.save(item);
         int createdItemId = item.getId();
         Item foundItem = itemDao.findById(createdItemId);

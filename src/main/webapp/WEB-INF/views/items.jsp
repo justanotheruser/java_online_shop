@@ -17,6 +17,23 @@
     </div>
 </div>
 
+<form method="POST">
+    <label>
+        Поиск по партнамберу
+        <input name="partNumber" type="text">
+    </label>
+    <input type="submit" value="Искать">
+</form>
+
+<form method="POST">
+    <label>
+        Поиск по описанию
+        <input name="keyword" type="text">
+    </label>
+    <input type="submit" value="Искать">
+</form>
+
+
 <section class="py-5">
     <jsp:include page="includes/itemsContainer.jsp"/>
 </section>

@@ -23,7 +23,7 @@ public class ItemsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String category = request.getParameter("category");
-        Collection<Item> items = null;
+        Collection<Item> items;
         if (category == null) {
             items = itemDao.findAll();
         } else {
@@ -38,7 +38,22 @@ public class ItemsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String category = request.getParameter("category");
+        Collection<Item> items;
+        if (request.getParameter("partNumber") != null) {
+            items = itemDao.findByPartNumber(request.getParameter("partNumber"), category);
+        } else if (request.getParameter("keyword") != null) {
+            items = itemDao.findWithDescriptionLike(request.getParameter("keyword"), category);
+        } else if (category != null) {
+            items = itemDao.findByCategory(category);
+        } else {
+            items = itemDao.findAll();
+        }
 
-        doGet(request, response);
+        request.setAttribute("items", items);
+        request.setAttribute("categories", itemService.getCategories());
+        RequestDispatcher dispatcher //
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/items.jsp");
+        dispatcher.forward(request, response);
     }
 }

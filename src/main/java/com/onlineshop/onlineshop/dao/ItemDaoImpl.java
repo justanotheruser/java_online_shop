@@ -49,4 +49,42 @@ public class ItemDaoImpl extends JpaDaoImpl<Item, Integer> implements ItemDao {
         }
     }
 
+    @Override
+    public Collection<Item> findByPartNumber(String partNumber, String category) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            if (category != null) {
+                TypedQuery<Item> query = entityManager.createNamedQuery("Items.byPartNumberAndCategory", Item.class);
+                query.setParameter(1, partNumber);
+                query.setParameter(2, category);
+                return query.getResultList();
+            }
+            TypedQuery<Item> query = entityManager.createNamedQuery("Items.byPartNumber", Item.class);
+            query.setParameter(1, partNumber);
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Collection<Item> findWithDescriptionLike(String keyword, String category) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            if (category != null) {
+                TypedQuery<Item> query = entityManager.createNamedQuery("Items.byDescriptionAndCategory", Item.class);
+                query.setParameter(1, keyword);
+                query.setParameter(2, category);
+                return query.getResultList();
+            }
+            TypedQuery<Item> query = entityManager.createNamedQuery("Items.byDescription", Item.class);
+            query.setParameter(1, keyword);
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
+    }
+
 }

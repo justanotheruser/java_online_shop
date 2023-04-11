@@ -8,6 +8,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "items", schema = "public", catalog = "online_shop")
 @NamedQuery(name = "Items.byCategory", query = "SELECT i FROM Item i WHERE i.category = ?1")
+@NamedQuery(name = "Items.byPartNumber", query = "SELECT i FROM Item i WHERE i.partNumber = ?1")
+@NamedQuery(name = "Items.byPartNumberAndCategory", query = "SELECT i FROM Item i WHERE i.partNumber = ?1 AND i.category = ?2")
+@NamedQuery(name = "Items.byDescription", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%')")
+@NamedQuery(name = "Items.byDescriptionAndCategory", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%') AND i.category = ?2")
 public class Item {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

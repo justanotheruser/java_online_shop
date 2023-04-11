@@ -4,22 +4,23 @@
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
-<div class="searchBox">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Выберите категорию
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <c:forEach var="category" items="${categories}">
-                <li><a class="dropdown-item" href="${root}?category=${category}">${category}</a></li>
-            </c:forEach>
-        </ul>
+
+<h1>Супер-пупер магазин (онлайн!)<h1><br>
+<h2>Новости</h2><br>
+<div class="news">
+    <div class="news-item">
+        <b>Дата: 11-04-23</b><br>
+        <span>
+            Сегодня ровно ничего не произошло.
+        </span>
+    </div>
+    <div class="news-item">
+        <b>Дата: 10-04-23</b><br>
+        <span>
+            Мы переехали. Новый адрес пункта выдачи:
+            <img width="600" height="400" src="https://s3.amazonaws.com/www.explorersweb.com/wp-content/uploads/2021/05/23233010/shutterstock_432638545-scaled.jpg">
+        </span>
     </div>
 </div>
-
-<section class="py-5">
-    <jsp:include page="includes/itemsContainer.jsp"/>
-</section>
-
 
 <jsp:include page="includes/footer.jsp"/>

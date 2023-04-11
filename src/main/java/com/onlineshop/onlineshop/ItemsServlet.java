@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-@WebServlet(name = "home", value = "/")
+@WebServlet(name = "items", value = "/items")
 public class ItemsServlet extends HttpServlet {
     private final ItemDao itemDao = ItemDaoImpl.getInstance();
     private final ItemService itemService = ItemServiceImpl.getInstance();
@@ -32,7 +32,7 @@ public class ItemsServlet extends HttpServlet {
         request.setAttribute("items", items);
         request.setAttribute("categories", itemService.getCategories());
         RequestDispatcher dispatcher //
-                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/items.jsp");
         dispatcher.forward(request, response);
     }
 

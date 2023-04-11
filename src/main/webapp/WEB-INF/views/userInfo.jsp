@@ -9,10 +9,13 @@
 <div id="content" class="container">
     <h3>${loggedInUser.username}</h3>
     ФИО: <b>${loggedInUser.fullName}</b><br />
+    Email: <b>${loggedInUser.email}</b><br />
     <c:if test='${loggedInUser.companyName != ""}'>
         Компания: <b>${loggedInUser.companyName}</b> <br />
     </c:if>
+    <c:if test="${loggedInUser.role != 'ADMIN'}">
     <a href="${root}/history">История заказов</a>
+    </c:if>
 
 </div>
 </body>

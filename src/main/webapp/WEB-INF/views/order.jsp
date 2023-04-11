@@ -6,7 +6,12 @@
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
+<c:if test="${loggedInUser.role == 'ADMIN'}">
+<h1>Заказ от ${user.fullName}</h1>
+</c:if>
+<c:if test="${loggedInUser.role != 'ADMIN'}">
 <h1>Заказ #${order.id}</h1>
+</c:if>
 <table>
   <tr>
     <th>Товар</th>

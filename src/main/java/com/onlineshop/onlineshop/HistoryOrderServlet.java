@@ -1,8 +1,12 @@
 package com.onlineshop.onlineshop;
 
+import com.onlineshop.onlineshop.config.SecurityConfig;
+import com.onlineshop.onlineshop.dao.OrderDao;
+import com.onlineshop.onlineshop.dao.OrderDaoImpl;
 import com.onlineshop.onlineshop.services.OrderService;
 import com.onlineshop.onlineshop.services.OrderServiceImpl;
 import com.onlineshop.onlineshop.utils.AppUtils;
+import entity.Order;
 import entity.OrderItem;
 import entity.User;
 import jakarta.servlet.RequestDispatcher;
@@ -19,7 +23,7 @@ import java.util.Collection;
 @WebServlet(name = "historyOrder", value = "/history/order")
 public class HistoryOrderServlet extends HttpServlet {
     private final OrderService orderService = OrderServiceImpl.getInstance();
-
+    private final OrderDao orderDao = OrderDaoImpl.getInstance();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -35,7 +39,15 @@ public class HistoryOrderServlet extends HttpServlet {
         } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/history");
         }
-        request.setAttribute("orderId", orderId);
+        Order order = orderDao.findById(orderId);
+        if (!loggedInUser.getRole().equals(SecurityConfig.ROLE_ADMIN) &&
+                order.getUserId() != loggedInUser.getId()) {
+            RequestDispatcher dispatcher //
+                    = this.getServletContext().getRequestDispatcher("/WEB-INF/views/accessDenied.jsp");
+            dispatcher.forward(request, response);
+        }
+
+        request.setAttribute("order", order);
         Collection<OrderItem> orderItems = orderService.getFullOrderInfo(orderId);
         request.setAttribute("orderItems", orderItems);
         RequestDispatcher dispatcher //

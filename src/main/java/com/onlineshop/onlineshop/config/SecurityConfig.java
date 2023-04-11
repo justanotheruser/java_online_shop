@@ -24,6 +24,7 @@ public class SecurityConfig {
         adminUrlPatterns.add("/userInfo");
         adminUrlPatterns.add("/admin/listItems");
         adminUrlPatterns.add("/admin/listOrders");
+        adminUrlPatterns.add("/history/order");
         mapConfig.put(ROLE_ADMIN, adminUrlPatterns);
     }
 

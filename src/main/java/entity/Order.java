@@ -112,10 +112,8 @@ public class Order {
         if (userId != order.userId) return false;
         if (Double.compare(order.totalPrice, totalPrice) != 0) return false;
         if (!Objects.equals(dateCreated, order.dateCreated)) return false;
-        if (!Objects.equals(deliveryMethod, order.deliveryMethod))
-            return false;
-        if (!Objects.equals(additionalNotes, order.additionalNotes))
-            return false;
+        if (!Objects.equals(deliveryMethod, order.deliveryMethod)) return false;
+        if (!Objects.equals(additionalNotes, order.additionalNotes)) return false;
         return Objects.equals(status, order.status);
     }
 

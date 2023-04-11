@@ -15,7 +15,7 @@
     <th>Статус</th>
     <c:forEach var="order" items="${orders}">
         <tr>
-            <td>${order.id}</td>
+            <td><a href="${root}/history/order?id=${order.id}">${order.id}</a></td>
             <td>${order.userId}</td>
             <td>${order.totalPrice}</td>
             <td>${order.deliveryMethod}</td>

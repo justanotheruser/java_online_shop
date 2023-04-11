@@ -6,7 +6,7 @@
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
-<h1>Заказ #${orderId}</h1>
+<h1>Заказ #${order.id}</h1>
 <table>
   <tr>
     <th>Товар</th>
@@ -23,5 +23,10 @@
   </tr>
   </c:forEach>
 </table>
+
+<b>Дата оформления:</b> ${order.dateCreated}<br>
+<c:if test="${not empty order.additionalNotes}">
+<b>Доп. информация:</b> ${order.additionalNotes}<br>
+</c:if>
 
 <jsp:include page="includes/footer.jsp"/>

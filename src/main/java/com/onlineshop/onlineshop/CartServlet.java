@@ -1,7 +1,10 @@
 package com.onlineshop.onlineshop;
 
+import com.onlineshop.onlineshop.config.SecurityConfig;
 import com.onlineshop.onlineshop.dao.ItemDao;
 import com.onlineshop.onlineshop.dao.ItemDaoImpl;
+import com.onlineshop.onlineshop.dao.UserDao;
+import com.onlineshop.onlineshop.dao.UserDaoImpl;
 import com.onlineshop.onlineshop.services.OrderService;
 import com.onlineshop.onlineshop.services.OrderServiceImpl;
 import com.onlineshop.onlineshop.utils.AppUtils;
@@ -25,6 +28,7 @@ import java.util.List;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
     private final ItemDao itemDao = ItemDaoImpl.getInstance();
+    private final UserDao userDao = UserDaoImpl.getInstance();
     private final OrderService orderService = OrderServiceImpl.getInstance();
 
     private static double getTotalPrice(HttpSession session) {
@@ -36,8 +40,7 @@ public class CartServlet extends HttpServlet {
         return result;
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             doGet_DisplayCart(request, response);
@@ -50,15 +53,13 @@ public class CartServlet extends HttpServlet {
         }
     }
 
-    protected void doGet_DisplayCart(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet_DisplayCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/cart.jsp");
         dispatcher.forward(request, response);
     }
 
-    protected void doGet_Remove(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet_Remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         int itemId = Integer.parseInt(request.getParameter("id"));
@@ -68,8 +69,7 @@ public class CartServlet extends HttpServlet {
         response.sendRedirect("cart");
     }
 
-    protected void doGet_Buy(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet_Buy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("cart") == null) {
             List<CartItem> cart = new ArrayList<>();
@@ -100,8 +100,7 @@ public class CartServlet extends HttpServlet {
         return -1;
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User loggedInUser = AppUtils.getLoggedInUser(session);
         if (loggedInUser == null) {
@@ -112,6 +111,45 @@ public class CartServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath());
             return;
         }
+        ArrayList<OrderItem> orderItems = saveOrderToDb(request, session, loggedInUser);
+        sendEmailToAdmins(orderItems);
+        session.removeAttribute("cart");
+        response.sendRedirect(request.getContextPath());
+    }
+
+    private void sendEmailToAdmins(ArrayList<OrderItem> orderItems) {
+        List<User> admins = userDao.findUsersByRole(SecurityConfig.ROLE_ADMIN);
+        ArrayList<String> adminEmails = new ArrayList<>();
+        for (User admin : admins) {
+            adminEmails.add(admin.getEmail());
+        }
+        EmailService emailService = new EmailService();
+        try {
+            emailService.SendMail(adminEmails, "Новый заказ", buildOrderEmailBody(orderItems));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String buildOrderEmailBody(ArrayList<OrderItem> orderItems) {
+        User buyer = userDao.findById(((OrderItem) orderItems.toArray()[0]).getOrder().getUserId());
+        StringBuilder messageBody = new StringBuilder();
+        messageBody.append("<h1>Заказ от " + buyer.getUsername() + "</h1>");
+        messageBody.append("<table><tr><th>Товар</th><th>Количество</th>");
+        for (OrderItem orderItem : orderItems) {
+            messageBody.append("<tr>");
+            messageBody.append("<td>" + orderItem.getItem().getName() + "</td>");
+            messageBody.append("<td>" + orderItem.getQuantity() + "</td>");
+            messageBody.append("</td>");
+        }
+        messageBody.append("</table><br>");
+        Order order = orderItems.get(0).getOrder();
+        messageBody.append("Способ доставки: " + order.getDeliveryMethod() + "<br>");
+        messageBody.append("Доп. информация: " + order.getAdditionalNotes() + "<br>");
+        return messageBody.toString();
+    }
+
+    private ArrayList<OrderItem> saveOrderToDb(HttpServletRequest request, HttpSession session, User loggedInUser) {
         Order order = new Order();
         order.setUserId(loggedInUser.getId());
         order.setDateCreated(new Date(System.currentTimeMillis()));
@@ -129,8 +167,6 @@ public class CartServlet extends HttpServlet {
             orderItems.add(orderItem);
         }
         orderService.saveOrder(order, orderItems);
-
-        session.removeAttribute("cart");
-        response.sendRedirect(request.getContextPath());
+        return orderItems;
     }
 }

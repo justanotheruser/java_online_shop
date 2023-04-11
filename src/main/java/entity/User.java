@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users", schema = "public", catalog = "online_shop")
 @NamedQuery(name = "User.byUsernameAndPassword", query = "SELECT u FROM User u WHERE u.username = ?1 AND u.password = ?2")
+@NamedQuery(name = "User.byRole", query = "SELECT u FROM User u WHERE u.role = ?1")
 public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

@@ -30,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
             order.getOrderItems().add(orderItem);
         }
         orderDao.save(order);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setOrder(order);
+        }
     }
 
     @Override

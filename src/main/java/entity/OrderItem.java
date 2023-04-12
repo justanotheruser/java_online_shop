@@ -20,12 +20,9 @@ public class OrderItem {
     @Basic
     @Column(name = "quantity")
     private int quantity;
-
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;

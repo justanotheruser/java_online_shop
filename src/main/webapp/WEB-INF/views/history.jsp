@@ -11,12 +11,14 @@
     <th>#</th>
     <th>Сумма</th>
     <th>Способ доставки</th>
+    <th>Дата оформления</th>
     <th>Статус</th>
     <c:forEach var="order" items="${orders}">
         <tr>
             <td><a href="${root}/history/order?id=${order.id}">${order.id}</a></td>
             <td>${order.totalPrice}</td>
             <td>${order.deliveryMethod}</td>
+            <td>${order.dateCreated}</td>
             <td>${order.status}</td>
         </tr>
     </c:forEach>

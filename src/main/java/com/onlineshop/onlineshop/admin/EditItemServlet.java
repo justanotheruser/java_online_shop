@@ -34,8 +34,7 @@ public class EditItemServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getContentType().equals("application/x-www-form-urlencoded")) {
             // TODO add validation
             Item item = itemDao.findById(itemId);

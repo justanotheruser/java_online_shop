@@ -11,9 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @WebServlet(name = "adminListItems", value = "/admin/listItems")
 public class ListItemsServlet extends HttpServlet {

@@ -1,7 +1,7 @@
 package com.onlineshop.onlineshop.admin;
 
-import com.onlineshop.onlineshop.services.OrderService;
-import com.onlineshop.onlineshop.services.OrderServiceImpl;
+import com.onlineshop.onlineshop.dao.OrderDao;
+import com.onlineshop.onlineshop.dao.OrderDaoImpl;
 import entity.Order;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,15 +15,14 @@ import java.util.Collection;
 
 @WebServlet(name = "adminListOrders", value = "/admin/listOrders")
 public class ListOrdersServlet extends HttpServlet {
-    private final OrderService orderService = OrderServiceImpl.getInstance();
+    private final OrderDao orderDao = OrderDaoImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Collection<Order> orders = orderService.getAll();
+        Collection<Order> orders = orderDao.getAllWithUsers();
         request.setAttribute("orders", orders);
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/admin/listOrders.jsp");
         dispatcher.forward(request, response);
     }
-
 }

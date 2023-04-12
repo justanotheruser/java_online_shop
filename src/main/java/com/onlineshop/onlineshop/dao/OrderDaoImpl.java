@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import java.util.Collection;
+import java.util.List;
 
 public class OrderDaoImpl extends JpaDaoImpl<Order, Integer> implements OrderDao {
     private static final Logger logger = LogManager.getLogger(ItemDaoImpl.class);
@@ -35,5 +36,16 @@ public class OrderDaoImpl extends JpaDaoImpl<Order, Integer> implements OrderDao
             logger.error(ex.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public Collection<Order> getAllWithUsers() {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        TypedQuery<Order> q = em.createQuery("SELECT o FROM Order o LEFT JOIN FETCH o.user", Order.class);
+        List<Order> orders = q.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return orders;
     }
 }

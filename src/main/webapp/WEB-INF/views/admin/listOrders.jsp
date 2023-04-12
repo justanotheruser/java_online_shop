@@ -9,14 +9,14 @@
 <h1>Список заказов</h1>
 <table>
     <th>id</th>
-    <th>user_id</th>
+    <th>Компания</th>
     <th>Сумма</th>
     <th>Способ доставки</th>
     <th>Статус</th>
     <c:forEach var="order" items="${orders}">
         <tr>
             <td><a href="${root}/history/order?id=${order.id}">${order.id}</a></td>
-            <td>${order.userId}</td>
+            <td>${order.user.companyName}</td>
             <td>${order.totalPrice}</td>
             <td>${order.deliveryMethod}</td>
             <td>${order.status}</td>

@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "user_id")
+    @Column(name = "user_id", insertable = false, updatable = false)
     private int userId;
     @Basic
     @Column(name = "date_created")
@@ -35,11 +35,13 @@ public class Order {
     @Basic
     @Column(name = "status")
     private String status;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     @Fetch(FetchMode.SELECT)
     private List<OrderItem> orderItems = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
@@ -60,6 +62,7 @@ public class Order {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
 
     public Date getDateCreated() {
         return dateCreated;
@@ -99,6 +102,14 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

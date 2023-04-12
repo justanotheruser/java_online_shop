@@ -2,8 +2,6 @@ package com.onlineshop.onlineshop.services;
 
 import com.onlineshop.onlineshop.dao.OrderDao;
 import com.onlineshop.onlineshop.dao.OrderDaoImpl;
-import com.onlineshop.onlineshop.dao.OrderItemDao;
-import com.onlineshop.onlineshop.dao.OrderItemDaoImpl;
 import entity.Order;
 import entity.OrderItem;
 import jakarta.transaction.Transactional;
@@ -14,7 +12,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private static OrderServiceImpl orderService;
     private final OrderDao orderDao = OrderDaoImpl.getInstance();
-    private final OrderItemDao orderItemDao = OrderItemDaoImpl.getInstance();
 
     public static OrderService getInstance() {
         if (orderService == null) {
@@ -33,11 +30,6 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem orderItem : orderItems) {
             orderItem.setOrder(order);
         }
-    }
-
-    @Override
-    public Collection<Order> getAll() {
-        return orderDao.findAll();
     }
 
     @Override

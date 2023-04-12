@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class ItemDaoImpl extends JpaDaoImpl<Item, Integer> implements ItemDao {
     private static final Logger logger = LogManager.getLogger(ItemDaoImpl.class);
@@ -80,6 +81,19 @@ public class ItemDaoImpl extends JpaDaoImpl<Item, Integer> implements ItemDao {
             }
             TypedQuery<Item> query = entityManager.createNamedQuery("Items.byDescription", Item.class);
             query.setParameter(1, keyword);
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Collection<Item> findCreatedAfter(Date date) {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            TypedQuery<Item> query = entityManager.createNamedQuery("Items.createdAfter", Item.class);
+            query.setParameter(1, date);
             return query.getResultList();
         } catch (HibernateException ex) {
             logger.error(ex.getMessage());

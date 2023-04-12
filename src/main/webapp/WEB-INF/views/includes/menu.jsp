@@ -22,8 +22,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<c:out value="${root}/items"/>">Все товары</a></li>
             <li><hr class="dropdown-divider"/></li>
-            <li><a class="dropdown-item" href="#!">Популярные</a></li>
-            <li><a class="dropdown-item" href="#!">Новинки</a></li>
+            <li><a class="dropdown-item" href="<c:out value="${root}/items/new"/>">Новинки</a></li>
           </ul>
         </li>
           </c:if>

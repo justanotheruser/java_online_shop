@@ -2,7 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
-import java.util.Arrays;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -12,9 +12,10 @@ import java.util.Objects;
 @NamedQuery(name = "Items.byPartNumberAndCategory", query = "SELECT i FROM Item i WHERE i.partNumber = ?1 AND i.category = ?2")
 @NamedQuery(name = "Items.byDescription", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%')")
 @NamedQuery(name = "Items.byDescriptionAndCategory", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%') AND i.category = ?2")
+@NamedQuery(name = "Items.createdAfter", query = "SELECT i FROM Item i WHERE i.dateCreated >= ?1")
 public class Item {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
     private int id;
@@ -48,6 +49,10 @@ public class Item {
     @Basic
     @Column(name = "average_rating")
     private Float averageRating;
+
+    @Basic
+    @Column(name = "date_created")
+    private Date dateCreated;
 
     public int getId() {
         return id;
@@ -137,6 +142,14 @@ public class Item {
         this.averageRating = averageRating;
     }
 
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -154,10 +167,8 @@ public class Item {
         if (!Objects.equals(description, that.description)) return false;
         if (!Objects.equals(quantity, that.quantity)) return false;
         if (!Objects.equals(base64Image, that.base64Image)) return false;
-        if (!Objects.equals(averageRating, that.averageRating))
-            return false;
-
-        return true;
+        if (!Objects.equals(dateCreated, that.dateCreated)) return false;
+        return Objects.equals(averageRating, that.averageRating);
     }
 
     @Override
@@ -169,10 +180,11 @@ public class Item {
         result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
         result = 31 * result + (partNumber != null ? partNumber.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (int)price;
+        result = 31 * result + (int) price;
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + base64Image.hashCode();
         result = 31 * result + (averageRating != null ? averageRating.hashCode() : 0);
+        result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         return result;
     }
 }

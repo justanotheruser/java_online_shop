@@ -1,11 +1,10 @@
 package com.onlineshop.onlineshop.utils;
 
-import java.util.List;
-import java.util.Set;
-
+import com.onlineshop.onlineshop.config.SecurityConfig;
 import jakarta.servlet.http.HttpServletRequest;
 
-import com.onlineshop.onlineshop.config.SecurityConfig;
+import java.util.List;
+import java.util.Set;
 
 public class SecurityUtils {
 

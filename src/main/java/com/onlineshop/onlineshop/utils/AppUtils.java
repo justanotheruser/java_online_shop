@@ -1,22 +1,20 @@
 package com.onlineshop.onlineshop.utils;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-
 import com.onlineshop.onlineshop.dao.ItemDao;
 import entity.Item;
+import entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import entity.User;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppUtils {
-    private static int REDIRECT_ID = 0;
-
     private static final Map<Integer, String> id_uri_map = new HashMap<>();
     private static final Map<String, Integer> uri_id_map = new HashMap<>();
+    private static int REDIRECT_ID = 0;
 
     // Store user info in Session.
     public static void storeLoggedInUser(HttpSession session, User loggedInUser) {
@@ -24,7 +22,7 @@ public class AppUtils {
     }
 
     // Get the user information stored in the session.
-    public static User getLoggedInUser(HttpSession session){
+    public static User getLoggedInUser(HttpSession session) {
         return (User) session.getAttribute("loggedInUser");
     }
 
@@ -45,10 +43,7 @@ public class AppUtils {
 
     public static String getRedirectAfterLoginUrl(HttpSession session, int redirectId) {
         String url = id_uri_map.get(redirectId);
-        if (url != null) {
-            return url;
-        }
-        return null;
+        return url;
     }
 
     public static int addItemToRequestAttrs(HttpServletRequest request, HttpServletResponse response, ItemDao itemDao) throws IOException {

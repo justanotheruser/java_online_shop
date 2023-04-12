@@ -9,8 +9,8 @@ import java.util.List;
 public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
 
     private final String user;
-    private List<String> roles = null;
     private final HttpServletRequest realRequest;
+    private List<String> roles = null;
 
     public UserRoleRequestWrapper(String user, List<String> roles, HttpServletRequest request) {
         super(request);

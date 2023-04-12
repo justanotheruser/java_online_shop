@@ -2,13 +2,15 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "users", schema = "public", catalog = "online_shop")
 @NamedQuery(name = "User.byUsernameAndPassword", query = "SELECT u FROM User u WHERE u.username = ?1 AND u.password = ?2")
 @NamedQuery(name = "User.byRole", query = "SELECT u FROM User u WHERE u.role = ?1")
 public class User {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic
     @Column(name = "id")
     private int id;
@@ -106,14 +108,13 @@ public class User {
         User that = (User) o;
 
         if (id != that.id) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (fullName != null ? !fullName.equals(that.fullName) : that.fullName != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
-        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        return true;
+        if (!Objects.equals(username, that.username)) return false;
+        if (!Objects.equals(password, that.password)) return false;
+        if (!Objects.equals(email, that.email)) return false;
+        if (!Objects.equals(fullName, that.fullName)) return false;
+        if (!Objects.equals(phoneNumber, that.phoneNumber)) return false;
+        if (!Objects.equals(companyName, that.companyName)) return false;
+        return Objects.equals(role, that.role);
     }
 
     @Override

@@ -12,8 +12,7 @@ import java.io.IOException;
 @WebServlet(name = "userInfo", value = "/userInfo")
 public class UserInfoServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/userInfo.jsp");
 

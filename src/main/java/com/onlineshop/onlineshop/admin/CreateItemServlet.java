@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
 
 @WebServlet(name = "adminCreateItem", value = "/admin/createItem")
@@ -36,6 +38,7 @@ public class CreateItemServlet extends HttpServlet {
         item.setDescription(request.getParameter("description"));
         item.setPrice(Double.parseDouble(request.getParameter("price")));
         item.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        item.setDateCreated(java.sql.Date.valueOf(LocalDate.now()));
         itemDao.save(item);
         response.sendRedirect(request.getContextPath() + "/admin/listItems");
     }

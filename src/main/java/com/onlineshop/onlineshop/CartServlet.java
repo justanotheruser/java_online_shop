@@ -88,7 +88,7 @@ public class CartServlet extends HttpServlet {
             }
             session.setAttribute("cart", cart);
         }
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(request.getContextPath() + "/items");
     }
 
     private int isExisting(int id, List<CartItem> cart) {
@@ -114,7 +114,7 @@ public class CartServlet extends HttpServlet {
         ArrayList<OrderItem> orderItems = saveOrderToDb(request, session, loggedInUser);
         sendEmailToAdmins(orderItems);
         session.removeAttribute("cart");
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(request.getContextPath() + "/items");
     }
 
     private void sendEmailToAdmins(ArrayList<OrderItem> orderItems) {
@@ -123,8 +123,8 @@ public class CartServlet extends HttpServlet {
         for (User admin : admins) {
             adminEmails.add(admin.getEmail());
         }
-        EmailService emailService = new EmailService();
         try {
+            EmailService emailService = new EmailService();
             emailService.SendMail(adminEmails, "Новый заказ", buildOrderEmailBody(orderItems));
         } catch (Exception e) {
             e.printStackTrace();

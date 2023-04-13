@@ -17,15 +17,9 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
         <c:if test="${not empty loggedInUser}">
           <c:if test="${loggedInUser.role == 'CUSTOMER'}">
-            <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Купить</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<c:out value="${root}/items"/>">Все товары</a></li>
-            <li><hr class="dropdown-divider"/></li>
-            <li><a class="dropdown-item" href="<c:out value="${root}/items/new"/>">Новинки</a></li>
-          </ul>
-        </li>
+            <li class="nav-item"><a class="nav-link" href="<c:out value="${root}/items"/>">Все товары</a></li>
           </c:if>
+          <li class="nav-item"><a class="nav-link" href="<c:out value="${root}/items/new"/>">Новинки</a></li>
         </c:if>
         <c:if test="${empty loggedInUser}">
           <li class="nav-item"><a class="nav-link" href="${root}/login">Войти</a></li>

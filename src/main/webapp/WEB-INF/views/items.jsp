@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <jsp:include page="includes/header.jsp"/>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 
 <body>
 <jsp:include page="includes/menu.jsp"/>
@@ -11,7 +12,7 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <c:forEach var="category" items="${categories}">
-                <li><a class="dropdown-item" href="${root}?category=${category}">${category}</a></li>
+                <li><a class="dropdown-item" href="${root}/items?category=${category}">${category}</a></li>
             </c:forEach>
         </ul>
     </div>

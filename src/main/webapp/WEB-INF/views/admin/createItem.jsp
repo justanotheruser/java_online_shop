@@ -23,7 +23,7 @@
     </label><br>
     <label>
         Код товара
-        <input name="partNumber" type="number"/>
+        <input name="partNumber" type="text"/>
     </label><br>
     <label>
         Описание

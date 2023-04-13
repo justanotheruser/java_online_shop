@@ -6,7 +6,22 @@
 
 <body>
 <jsp:include page="../includes/menu.jsp"/>
+
+<div class="searchBox">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Выберите категорию
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <c:forEach var="category" items="${categories}">
+                <li><a class="dropdown-item" href="${root}/admin/listItems?category=${category}">${category}</a></li>
+            </c:forEach>
+        </ul>
+    </div>
+</div>
+
 <button><a href="${root}/admin/createItem">Добавить</a></button>
+
 <table>
     <tr>
         <th>Имя</th>

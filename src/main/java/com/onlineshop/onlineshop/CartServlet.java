@@ -71,19 +71,20 @@ public class CartServlet extends HttpServlet {
 
     protected void doGet_Buy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
         if (session.getAttribute("cart") == null) {
             List<CartItem> cart = new ArrayList<>();
             int itemId = Integer.parseInt(request.getParameter("id"));
-            cart.add(new CartItem(itemDao.findById(itemId), 1));
+            cart.add(new CartItem(itemDao.findById(itemId), quantity));
             session.setAttribute("cart", cart);
         } else {
             List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
             int itemId = Integer.parseInt(request.getParameter("id"));
             int index = isExisting(itemId, cart);
             if (index == -1) {
-                cart.add(new CartItem(itemDao.findById(itemId), 1));
+                cart.add(new CartItem(itemDao.findById(itemId), quantity));
             } else {
-                int quantity = cart.get(index).getQuantity() + 1;
+                quantity += cart.get(index).getQuantity();
                 cart.get(index).setQuantity(quantity);
             }
             session.setAttribute("cart", cart);

@@ -19,13 +19,15 @@
                 </div>
                 <p class="lead">${item.description}</p>
                 <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <a href="${pageContext.request.contextPath}/cart?&action=buy&id=${item.id}">
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <form method="GET" action="${pageContext.request.contextPath}/cart">
+                        <input class="form-control text-center me-3" name="quantity" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        <input type="submit" class="btn btn-outline-dark flex-shrink-0" type="button">
                             <i class="bi-cart-fill me-1"></i>
                             Добавить в корзину
-                        </button>
-                    </a>
+                        </input>
+                        <input type="hidden" name="action" value="buy">
+                        <input type="hidden" name="id" value="${item.id}">
+                    </form>
                 </div>
             </div>
         </div>

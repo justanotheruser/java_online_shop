@@ -26,11 +26,11 @@
   </label><br>
   <label>
     Код товара
-    <input name="partNumber" type="number" value="${item.partNumber}"/>
+    <input name="partNumber" type="text" value="${item.partNumber}"/>
   </label><br>
   <label>
     Описание
-    <textarea rows="10" cols="45" name="description" value="${item.description}"></textarea>
+    <textarea rows="10" cols="45" name="description">${item.description}</textarea>
   </label><br>
   <label>
     Цена

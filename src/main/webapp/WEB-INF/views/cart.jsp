@@ -39,6 +39,18 @@
     </tr>
 </table>
 <br>
+
+<c:if test="${not empty orderProblems}">
+<span><h5>Заказ может прийти с задержкой</h5></span><br>
+</c:if>
+<c:forEach var="orderProblem" items="${orderProblems}">
+    <div class="orderProblem">
+        <span>Количество товара "${orderProblem.itemName}" больше, чем доступное на складе</span> <br>
+        <span>Количество в заказе: ${orderProblem.orderedQuantity}</span> <br>
+        <span>Количество в на складе: ${orderProblem.availableQuantity}</span>
+    </div>
+</c:forEach>
+
 <a href="${root}">Продолжить покупки</a><br>
 
 <h3>Оформить заказ</h3>
@@ -54,5 +66,4 @@
     <input type="submit" value="Оформить заказ">
 </form>
 
-</body>
-</html>
+<jsp:include page="includes/footer.jsp"/>

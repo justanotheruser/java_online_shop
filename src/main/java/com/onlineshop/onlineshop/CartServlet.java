@@ -8,10 +8,7 @@ import com.onlineshop.onlineshop.dao.UserDaoImpl;
 import com.onlineshop.onlineshop.services.OrderService;
 import com.onlineshop.onlineshop.services.OrderServiceImpl;
 import com.onlineshop.onlineshop.utils.AppUtils;
-import entity.CartItem;
-import entity.Order;
-import entity.OrderItem;
-import entity.User;
+import entity.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -54,9 +51,26 @@ public class CartServlet extends HttpServlet {
     }
 
     protected void doGet_DisplayCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        ArrayList<OrderedItemQuantityProblem> orderProblems = getOrderedItemQuantityProblems(cart);
+        request.setAttribute("orderProblems", orderProblems);
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/cart.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private ArrayList<OrderedItemQuantityProblem> getOrderedItemQuantityProblems(List<CartItem> cart) {
+        ArrayList<OrderedItemQuantityProblem> orderProblems = new ArrayList<>();
+        if (cart != null) {
+            for (CartItem cartItem : cart) {
+                Item item = itemDao.findById(cartItem.getProduct().getId());
+                if (item != null && item.getQuantity() < cartItem.getQuantity()) {
+                    orderProblems.add(new OrderedItemQuantityProblem(item, cartItem.getQuantity()));
+                }
+            }
+        }
+        return orderProblems;
     }
 
     protected void doGet_Remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -18,12 +18,12 @@ public class EmailService {
 
     public EmailService() {
         prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.host", "smtp.yandex.ru");
+        prop.put("mail.smtp.port", 465);
         prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true");
-        username = System.getenv("JAVA_SHOP_SMTP_USERNAME");
-        password = System.getenv("JAVA_SHOP_SMTP_PASSWORD");
+        prop.put("mail.smtp.ssl.enable", "true");
+        username = "java-online-shop-project";
+        password = "ythdmzvfatbidchr";
     }
 
     public void SendMail(List<String> recipients, String subject, String content) throws Exception {
@@ -35,7 +35,7 @@ public class EmailService {
         });
 
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("onlineshop@gmail.com"));
+        message.setFrom(new InternetAddress("java-online-shop-project@yandex.ru"));
         ArrayList<InternetAddress> recipientsAddresses = new ArrayList<>();
         for (String recipient : recipients) {
             Collections.addAll(recipientsAddresses, InternetAddress.parse(recipient));

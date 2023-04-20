@@ -119,7 +119,7 @@ public class CartServlet extends HttpServlet {
     }
 
     private void sendEmailToAdmins(ArrayList<OrderItem> orderItems) {
-        List<User> admins = userDao.findUsersByRole(SecurityConfig.ROLE_ADMIN);
+        List<User> admins = userDao.findByRole(SecurityConfig.ROLE_ADMIN);
         ArrayList<String> adminEmails = new ArrayList<>();
         for (User admin : admins) {
             adminEmails.add(admin.getEmail());

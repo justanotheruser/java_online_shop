@@ -21,7 +21,7 @@ public class UserDaoImpl extends JpaDaoImpl<User, Integer> implements UserDao {
         return userDao;
     }
 
-    public List<User> findUsersByRole(String role) {
+    public List<User> findByRole(String role) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -37,6 +37,42 @@ public class UserDaoImpl extends JpaDaoImpl<User, Integer> implements UserDao {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<User> userByUsername = entityManager.createNamedQuery("User.byUsername", User.class);
+            userByUsername.setParameter(1, username);
+            List<User> foundUsers = userByUsername.getResultList();
+            if (foundUsers.size() > 0) {
+                return foundUsers.get(0);
+            }
+            return null;
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<User> userByEmail = entityManager.createNamedQuery("User.byEmail", User.class);
+            userByEmail.setParameter(1, email);
+            List<User> foundUsers = userByEmail.getResultList();
+            if (foundUsers.size() > 0) {
+                return foundUsers.get(0);
+            }
+            return null;
+        } finally {
             entityManager.close();
             entityManagerFactory.close();
         }

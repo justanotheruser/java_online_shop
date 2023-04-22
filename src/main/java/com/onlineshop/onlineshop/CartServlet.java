@@ -129,7 +129,9 @@ public class CartServlet extends HttpServlet {
         ArrayList<OrderItem> orderItems = saveOrderToDb(request, session, loggedInUser);
         sendEmailToAdmins(orderItems);
         session.removeAttribute("cart");
-        response.sendRedirect(request.getContextPath() + "/items");
+        RequestDispatcher dispatcher //
+                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/order_success.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void sendEmailToAdmins(ArrayList<OrderItem> orderItems) {

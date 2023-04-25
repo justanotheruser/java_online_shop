@@ -166,10 +166,11 @@ public class CartServlet extends HttpServlet {
         User buyer = userDao.findById(((OrderItem) orderItems.toArray()[0]).getOrder().getUserId());
         StringBuilder messageBody = new StringBuilder();
         messageBody.append("<h1>Заказ от " + buyer.getUsername() + "</h1>");
-        messageBody.append("<table><tr><th>Товар</th><th>Количество</th>");
+        messageBody.append("<table><tr><th>Товар</th><th>Партнамбер</th><th>Количество</th>");
         for (OrderItem orderItem : orderItems) {
             messageBody.append("<tr>");
             messageBody.append("<td>" + orderItem.getItem().getName() + "</td>");
+            messageBody.append("<td>" + orderItem.getItem().getPartNumber() + "</td>");
             messageBody.append("<td>" + orderItem.getQuantity() + "</td>");
             messageBody.append("</td>");
         }
@@ -177,7 +178,7 @@ public class CartServlet extends HttpServlet {
         Order order = orderItems.get(0).getOrder();
         messageBody.append("Способ доставки: " + order.getDeliveryMethod() + "<br>");
         messageBody.append("Доп. информация: " + order.getAdditionalNotes() + "<br>");
-        messageBody.append("Дата оформления:" + LocalDate.now());
+        messageBody.append("Дата оформления: " + LocalDate.now());
         return messageBody.toString();
     }
 

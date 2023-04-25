@@ -19,7 +19,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet("/cart")
@@ -128,10 +130,22 @@ public class CartServlet extends HttpServlet {
         }
         ArrayList<OrderItem> orderItems = saveOrderToDb(request, session, loggedInUser);
         sendEmailToAdmins(orderItems);
+        User user = AppUtils.getLoggedInUser(session);
+        sendEmailToCustomer(user, orderItems);
         session.removeAttribute("cart");
         RequestDispatcher dispatcher //
                 = this.getServletContext().getRequestDispatcher("/WEB-INF/views/order_success.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void sendEmailToCustomer(User user, ArrayList<OrderItem> orderItems) {
+        ArrayList<String> emailAddresses = new ArrayList<>(Collections.singletonList(user.getEmail()));
+        try {
+            EmailService emailService = new EmailService();
+            emailService.SendMail(emailAddresses, "Копия заказа", buildOrderEmailBody(orderItems));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendEmailToAdmins(ArrayList<OrderItem> orderItems) {
@@ -163,6 +177,7 @@ public class CartServlet extends HttpServlet {
         Order order = orderItems.get(0).getOrder();
         messageBody.append("Способ доставки: " + order.getDeliveryMethod() + "<br>");
         messageBody.append("Доп. информация: " + order.getAdditionalNotes() + "<br>");
+        messageBody.append("Дата оформления:" + LocalDate.now());
         return messageBody.toString();
     }
 

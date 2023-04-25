@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "online_shop")
-@NamedQuery(name = "User.byUsernameAndPassword", query = "SELECT u FROM User u WHERE u.username = ?1 AND u.password = ?2")
+@NamedQuery(name = "User.byUsernameAndPasswordHash", query = "SELECT u FROM User u WHERE u.username = ?1 AND u.passwordHash = ?2")
 @NamedQuery(name = "User.byRole", query = "SELECT u FROM User u WHERE u.role = ?1")
 @NamedQuery(name = "User.byUsername", query = "SELECT u FROM User u WHERE u.username = ?1")
 @NamedQuery(name = "User.byEmail", query = "SELECT u FROM User u WHERE u.email = ?1")
@@ -20,8 +20,8 @@ public class User {
     @Column(name = "username")
     private String username;
     @Basic
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password_hash")
+    private String passwordHash;
     @Basic
     @Column(name = "email")
     private String email;
@@ -37,6 +37,10 @@ public class User {
     @Basic
     @Column(name = "role")
     private String role;
+
+    @Basic
+    @Column(name = "is_active")
+    private boolean is_active;
 
     public int getId() {
         return id;
@@ -54,12 +58,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String password) {
+        this.passwordHash = password;
     }
 
     public String getEmail() {
@@ -102,6 +106,14 @@ public class User {
         this.role = role;
     }
 
+    public boolean getIsActive() {
+        return is_active;
+    }
+
+    public void setIsActive(boolean is_active) {
+        this.is_active = is_active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,11 +123,12 @@ public class User {
 
         if (id != that.id) return false;
         if (!Objects.equals(username, that.username)) return false;
-        if (!Objects.equals(password, that.password)) return false;
+        if (!Objects.equals(passwordHash, that.passwordHash)) return false;
         if (!Objects.equals(email, that.email)) return false;
         if (!Objects.equals(fullName, that.fullName)) return false;
         if (!Objects.equals(phoneNumber, that.phoneNumber)) return false;
         if (!Objects.equals(companyName, that.companyName)) return false;
+        if (is_active != that.is_active) return false;
         return Objects.equals(role, that.role);
     }
 
@@ -123,12 +136,13 @@ public class User {
     public int hashCode() {
         int result = id;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (is_active ? 1 : 0);
         return result;
     }
 }

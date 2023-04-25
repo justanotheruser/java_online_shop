@@ -20,6 +20,18 @@
     </div>
 </div>
 
+<div class="searchBox">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            Выбор по количеству на складе
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="${root}/admin/listItems?quantity=any">Все</a></li>
+            <li><a class="dropdown-item" href="${root}/admin/listItems?quantity=zero_or_less">Недостающие</a></li>
+        </ul>
+    </div>
+</div>
+
 <button><a href="${root}/admin/createItem">Добавить</a></button>
 
 <table>

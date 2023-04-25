@@ -13,6 +13,7 @@ import java.util.Objects;
 @NamedQuery(name = "Items.byDescription", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%')")
 @NamedQuery(name = "Items.byDescriptionAndCategory", query = "SELECT i FROM Item i WHERE i.description LIKE CONCAT('%',?1,'%') AND i.category = ?2")
 @NamedQuery(name = "Items.createdAfter", query = "SELECT i FROM Item i WHERE i.dateCreated >= ?1")
+@NamedQuery(name = "Items.withZeroOrLessQuantity", query = "SELECT i FROM Item i WHeRE i.quantity <= 0")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

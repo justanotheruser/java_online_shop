@@ -51,6 +51,18 @@ public class ItemDaoImpl extends JpaDaoImpl<Item, Integer> implements ItemDao {
     }
 
     @Override
+    public Collection<Item> findWithZeroOrLessQuantity() {
+        try {
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            TypedQuery<Item> query = entityManager.createNamedQuery("Items.withZeroOrLessQuantity", Item.class);
+            return query.getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public Collection<Item> findByPartNumber(String partNumber, String category) {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();

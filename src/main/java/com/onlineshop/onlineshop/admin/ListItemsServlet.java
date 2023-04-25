@@ -25,7 +25,12 @@ public class ListItemsServlet extends HttpServlet {
         String category = request.getParameter("category");
         Collection<Item> items;
         if (category == null) {
-            items = itemDao.findAll();
+            String quantity = request.getParameter("quantity");
+            if (quantity != null && quantity.equals("zero_or_less")) {
+                items = itemDao.findWithZeroOrLessQuantity();
+            } else {
+                items = itemDao.findAll();
+            }
         } else {
             items = itemDao.findByCategory(category);
         }

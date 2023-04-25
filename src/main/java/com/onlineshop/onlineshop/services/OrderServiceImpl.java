@@ -34,9 +34,6 @@ public class OrderServiceImpl implements OrderService {
             Item item = itemDao.findById(orderItem.getItem().getId());
             int quantity = item.getQuantity();
             quantity -= orderItem.getQuantity();
-            if (quantity < 0) {
-                quantity = 0;
-            }
             item.setQuantity(quantity);
             itemDao.update(item);
             orderItem.setOrder(order);

@@ -30,6 +30,7 @@
           <c:if test="${loggedInUser.role == 'ADMIN'}">
             <li class="nav-item"><a class="nav-link" href="${root}/admin/listItems">Товары</a></li>
             <li class="nav-item"><a class="nav-link" href="${root}/admin/listOrders">Заказы</a></li>
+            <li class="nav-item"><a class="nav-link" href="${root}/admin/listUsers">Пользователи</a></li>
           </c:if>
           <li class="nav-item"><a class="nav-link" href="${root}/logout">Выйти</a></li>
           <span style="color:red">[ ${loggedInUser.username} ]</span>

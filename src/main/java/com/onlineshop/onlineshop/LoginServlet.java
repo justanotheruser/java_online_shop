@@ -52,6 +52,15 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
+        if (user.getIsBlocked()) {
+            String errorMessage = "Аккаунт заблокирован";
+            request.setAttribute("errorMessage", errorMessage);
+            RequestDispatcher dispatcher //
+                    = this.getServletContext().getRequestDispatcher("/WEB-INF/views/login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
         AppUtils.storeLoggedInUser(request.getSession(), user);
         int redirectId = -1;
         try {

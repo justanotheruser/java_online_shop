@@ -37,10 +37,12 @@ public class User {
     @Basic
     @Column(name = "role")
     private String role;
-
     @Basic
     @Column(name = "is_active")
-    private boolean is_active;
+    private boolean isActive;
+    @Basic
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
 
     public int getId() {
         return id;
@@ -107,11 +109,19 @@ public class User {
     }
 
     public boolean getIsActive() {
-        return is_active;
+        return isActive;
     }
 
-    public void setIsActive(boolean is_active) {
-        this.is_active = is_active;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     @Override
@@ -128,7 +138,8 @@ public class User {
         if (!Objects.equals(fullName, that.fullName)) return false;
         if (!Objects.equals(phoneNumber, that.phoneNumber)) return false;
         if (!Objects.equals(companyName, that.companyName)) return false;
-        if (is_active != that.is_active) return false;
+        if (isActive != that.isActive) return false;
+        if (isBlocked != that.isBlocked) return false;
         return Objects.equals(role, that.role);
     }
 
@@ -142,7 +153,8 @@ public class User {
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (is_active ? 1 : 0);
+        result = 31 * result + (isActive ? 1 : 0);
+        result = 31 * result + (isBlocked ? 1 : 0);
         return result;
     }
 }

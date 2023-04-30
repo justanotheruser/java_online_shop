@@ -161,7 +161,6 @@ public class CartServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
     private String buildOrderEmailBody(ArrayList<OrderItem> orderItems) {
         User buyer = userDao.findById(((OrderItem) orderItems.toArray()[0]).getOrder().getUserId());
         StringBuilder messageBody = new StringBuilder();

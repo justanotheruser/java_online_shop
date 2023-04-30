@@ -22,11 +22,13 @@
             <td>${user.isActive}</td>
             <td>${user.isBlocked}</td>
             <td>
-                <c:if test="${user.isBlocked}">
-                    <a href="${root}/admin/listUsers?action=unblock&id=${user.id}">Разблокировать</a>
-                </c:if>
-                <c:if test="${not user.isBlocked}">
-                    <a href="${root}/admin/listUsers?action=block&id=${user.id}">Заблокировать</a>
+                <c:if test="${loggedInUser.id != user.id}">
+                    <c:if test="${user.isBlocked}">
+                        <a href="${root}/admin/listUsers?action=unblock&id=${user.id}">Разблокировать</a>
+                    </c:if>
+                    <c:if test="${not user.isBlocked}">
+                        <a href="${root}/admin/listUsers?action=block&id=${user.id}">Заблокировать</a>
+                    </c:if>
                 </c:if>
             </td>
         </tr>

@@ -23,7 +23,7 @@ public class EmailService {
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.ssl.enable", "true");
         username = "java-online-shop-project";
-        password = "ythdmzvfatbidchr";
+        password = "";
     }
 
     public void SendMail(List<String> recipients, String subject, String content) throws Exception {
